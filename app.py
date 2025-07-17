@@ -1,9 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # นำเข้า CORS
 from urllib.parse import urljoin, urlparse
 import requests
 from bs4 import BeautifulSoup
+import os
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/check_seo', methods=['POST'])
 def check_seo():
@@ -57,4 +60,5 @@ def check_seo():
         return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
